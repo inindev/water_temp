@@ -1,3 +1,14 @@
+#
+# upload_temps.py
+#
+#   utility for uploading readings to dynamodb by 
+#   invoking an authentication protected lambda
+#
+#   readings are taken fifo from the specified log
+#   file and are transaction protected
+#
+#   John Clark, 2019
+#
 
 from datetime import datetime, timezone
 import os
