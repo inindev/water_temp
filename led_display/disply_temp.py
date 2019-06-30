@@ -27,8 +27,9 @@ def c1000_to_fahrenheit(temp_c1000):
 
 
 def main():
-    entry = get_last_entry(my_config.LOG_PATH_LAST)
-    temp = c1000_to_fahrenheit(entry[1])
+    entry = get_last_entry(my_config.LOG_PATH)
+    tokens = entry.split('\t')
+    temp = c1000_to_fahrenheit(tokens[1])
     temp_str = '{:.1f}'.format(temp)
 
     disp = TM1637(gpio_clk=17, gpio_dio=18)
