@@ -65,5 +65,7 @@ def main():
         fp.write('{}\t{}\n'.format(dtnow, c1000))
 
 
-main()
+
+if __name__ == '__main__':
+    main()
 
