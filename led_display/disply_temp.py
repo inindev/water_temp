@@ -9,8 +9,6 @@
 #
 
 from TM1637 import TM1637
-import sys
-sys.path.append('..')
 import my_config
 
 
