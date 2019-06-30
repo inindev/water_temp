@@ -1,3 +1,14 @@
+#
+# sample.py
+#
+#   python utility for sampling temperature thermistor
+#   thermistor values are in celsius * 1000
+#
+#   readings taken by averaging 8 readings from two thermistors
+#   two priming readings are taken before sample series
+#
+#   John Clark, 2019
+#
 
 from datetime import datetime
 import os
