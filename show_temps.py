@@ -3,7 +3,9 @@ from datetime import datetime, timezone, timedelta
 import os
 import my_config
 
-tz_off = timedelta(hours=4) if os.popen('TZ="US/Eastern" date +%z').read().strip() == '-0400' else timedelta(hours=5)
+# EDT or EST
+tz_offs = timedelta(hours=4 if os.popen('TZ="US/Eastern" date +%z').read().strip()=='-0400' else 5)
+
 
 with open(my_config.LOG_PATH, 'r') as fp:
     ll = list(fp)
@@ -16,7 +18,7 @@ for i in range(n100, n):
     tokens = ll[i].split('\t')
 
     utc = datetime.strptime(tokens[0], '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc)
-    local = utc - tz_off
+    local = utc - tz_offs
     ap = 'p' if local.strftime('%p') == 'PM' else 'a'
 #    date = local.strftime('%I:%M{} %-m/%-d/%Y').format(ap)
     date = local.strftime('%-m/%-d/%Y %I:%M{}').format(ap)
