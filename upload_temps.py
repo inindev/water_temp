@@ -113,11 +113,25 @@ def process_top_entry(file):
     return 0
 
 
+def remove_if_empty(file):
+    try:
+        if os.stat(file).st_size == 0:
+            print('removing empty file: {}'.format(file))
+            os.remove(file)
+    except OSError as ex:
+        pass
+
+
 def main():
-    while os.stat(my_config.LOG_PATH_LAST).st_size > 0:
-        rc = process_top_entry(my_config.LOG_PATH_LAST)
-        if rc < 0:
-            return
+	try:
+	    while os.stat(my_config.LOG_PATH_LAST).st_size > 0:
+	        rc = process_top_entry(my_config.LOG_PATH_LAST)
+	        if rc < 0:
+	            return
+    except OSError as ex:
+        pass
+
+    remove_if_empty(my_config.LOG_PATH_LAST)
 
 
 
