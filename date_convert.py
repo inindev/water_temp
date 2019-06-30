@@ -1,3 +1,12 @@
+#
+# date_convert.py
+#
+#   utility for converting human readable date
+#   string "2019-06-30 10:58:12" to its unix
+#   epoch 1561892292 format
+#
+#   John Clark, 2019
+#
 
 from datetime import datetime, timezone
 import sys
