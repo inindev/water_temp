@@ -1,7 +1,7 @@
 #
 # upload_temps.py
 #
-#   utility for uploading readings to dynamodb by 
+#   utility for uploading readings to dynamodb by
 #   invoking an authentication protected lambda
 #
 #   readings are taken fifo from the specified log
@@ -44,7 +44,7 @@ def parse_line(line):
     # extract date as epoch date: 1561811080
     utc = datetime.strptime(tokens[0], '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc)
     utc_epoch = int(utc.timestamp())
-    # extract temps as raw celsius * 1000 
+    # extract temps as raw celsius * 1000
     temp_c1000 = int(tokens[1])
 
     data = {
@@ -58,11 +58,11 @@ def parse_line(line):
 def aws_upload_data(url, key, data):
     print('sending: {}'.format(data))
     data_json = json.dumps(data)
-    
+
     req = request.Request(url=url, data=data_json.encode('utf-8'), method='POST')
     req.add_header("content-type", "application/json")
     req.add_header("x-api-key", key)
-    
+
     resp = request.urlopen(req)
     resp_str = resp.read().decode('utf-8')
     resp_json = json.loads(resp_str)
@@ -123,11 +123,11 @@ def remove_if_empty(file):
 
 
 def main():
-	try:
-	    while os.stat(my_config.LOG_PATH_LAST).st_size > 0:
-	        rc = process_top_entry(my_config.LOG_PATH_LAST)
-	        if rc < 0:
-	            return
+    try:
+        while os.stat(my_config.LOG_PATH_LAST).st_size > 0:
+            rc = process_top_entry(my_config.LOG_PATH_LAST)
+            if rc < 0:
+                return
     except OSError as ex:
         pass
 
