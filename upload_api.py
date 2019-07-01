@@ -1,5 +1,5 @@
 #
-# upload_temps.py
+# upload_api.py
 #
 #   utility for uploading readings to dynamodb by
 #   invoking an authentication protected lambda
