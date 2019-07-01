@@ -1,5 +1,5 @@
 #
-# date_convert.py
+# display_temp.py
 #
 #   utility for reading the last temperature log
 #   entry and displaying it on a TM1637 LED display
