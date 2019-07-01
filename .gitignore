@@ -1,11 +1,12 @@
 # project specific
 test*.py
 water*.log
+*config.py
+!/led_display/my_config.py
 
 # python
 __pycache__/
 *.py[cod]
-*config.py
 
 # osx
 .DS_Store
