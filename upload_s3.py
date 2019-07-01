@@ -8,6 +8,7 @@
 
 import boto3
 from datetime import datetime, timezone
+import sys
 import json
 import my_config
 
