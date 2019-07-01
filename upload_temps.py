@@ -11,7 +11,7 @@
 #
 
 from datetime import datetime, timezone
-import os
+import os, sys
 import json
 import urllib.request as request
 import my_config
@@ -136,5 +136,8 @@ def main():
 
 
 if __name__ == '__main__':
+    if sys.version_info.major < 3:
+        print('python 3 required')
+        sys.exit(1)
     main()
 
