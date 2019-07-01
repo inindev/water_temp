@@ -1,5 +1,5 @@
 # project specific
-test.py
+test*.py
 water*.log
 
 # python

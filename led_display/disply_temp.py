@@ -25,7 +25,7 @@ def c1000_to_fahrenheit(temp_c1000):
 
 
 def main():
-    entry = get_last_entry(my_config.LOG_PATH)
+    entry = get_last_entry(my_config.path.log)
     tokens = entry.split('\t')
     temp = c1000_to_fahrenheit(tokens[1])
     temp_str = '{:.1f}'.format(temp)

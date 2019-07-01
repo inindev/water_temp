@@ -104,7 +104,7 @@ def process_top_entry(file):
         write_file_remove(file, arr)
         return 1 # error, bad parse
 
-    rc = aws_upload_data(my_config.AWS_URL, my_config.API_KEY, data)
+    rc = aws_upload_data(my_config.aws.api.url, my_config.aws.api.key, data)
     if rc != 0:
         return -1 # error, bad upload
 
@@ -124,14 +124,14 @@ def remove_if_empty(file):
 
 def main():
     try:
-        while os.stat(my_config.LOG_PATH_LAST).st_size > 0:
-            rc = process_top_entry(my_config.LOG_PATH_LAST)
+        while os.stat(my_config.path.upload).st_size > 0:
+            rc = process_top_entry(my_config.path.upload)
             if rc < 0:
                 return
     except OSError as ex:
         pass
 
-    remove_if_empty(my_config.LOG_PATH_LAST)
+    remove_if_empty(my_config.path.upload)
 
 
 

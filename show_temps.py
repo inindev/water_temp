@@ -44,7 +44,7 @@ def entry_to_disp(entry):
 
 
 def main():
-    arr = read_file(my_config.LOG_PATH)
+    arr = read_file(my_config.path.log)
     amax = len(arr)
     amin = max(0, amax - 100)
 

@@ -69,10 +69,10 @@ def main():
     c1000 = round(avg_c1000)
     temp_f = avg_c1000 * 9.0 / 5000.0 + 32.0
     print('{}  {} ({:.1f})'.format(dtnow, c1000, temp_f))
-    with open(my_config.LOG_PATH, 'a') as fp:
+    with open(my_config.path.log, 'a') as fp:
         fp.write('{}\t{}\n'.format(dtnow, c1000))
 
-    with open(my_config.LOG_PATH_LAST, 'a') as fp:
+    with open(my_config.path.upload, 'a') as fp:
         fp.write('{}\t{}\n'.format(dtnow, c1000))
 
 
