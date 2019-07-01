@@ -21,8 +21,8 @@ def get_last_entry(file):
 
 
 def c1000_to_fahrenheit(temp_c1000):
-    temp_fahrenheit = float(temp_c1000) * 9.0 / 5000.0 + 32.0
-    return temp_fahrenheit
+    temp_f10 = round(float(temp_c1000) * 9.0 / 500.0 + 320.0)
+    return temp_f10 / 10.0
 
 
 def main():
