@@ -51,10 +51,12 @@ def parse_line(line):
     return data
 
 
-def s3_upload(region, bucket, file, data):
+def s3_upload_json(region, bucket, file, data):
+    data_json = json.dumps(data)
+    print('storing: {}'.format(data_json))
     s3 = boto3.resource('s3', region_name=region)
     s3file = s3.Object(bucket, file)
-    s3file.put(Body=data.encode('utf8'))
+    s3file.put(Body=data_json.encode('utf8'), ContentType='application/json')
 
 
 def main():
@@ -68,13 +70,11 @@ def main():
         line = parse_line(entry)
         if line:
             data.append(line)
-    data_json = json.dumps(data)
 
-    print('storing: {}'.format(data_json))
-    s3_upload(my_config.aws.region,
-              my_config.aws.s3.bucket,
-              my_config.aws.s3.file,
-              data_json)
+    s3_upload_json(my_config.aws.region,
+                   my_config.aws.s3.bucket,
+                   my_config.aws.s3.file,
+                   data)
 
 
 
