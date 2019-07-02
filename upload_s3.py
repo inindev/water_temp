@@ -13,10 +13,10 @@ import json
 import my_config
 
 
-def get_last_entry(file):
+def get_last_n_entries(file, n):
     last = None
     with open(file, 'r') as fp:
-        last = list(fp)[-1]
+        last = list(fp)[-n:]
     return last
 
 
@@ -58,12 +58,18 @@ def s3_upload(region, bucket, file, data):
 
 
 def main():
-    entry = get_last_entry(my_config.path.log)
-    if not entry:
+    entries = get_last_n_entries(my_config.path.log, 5)
+    if not entries:
         print('no entries found')
         sys.exit(1)
-    data = parse_line(entry)
+
+    data = []
+    for entry in entries:
+        line = parse_line(entry)
+        if line:
+            data.append(line)
     data_json = json.dumps(data)
+
     print('storing: {}'.format(data_json))
     s3_upload(my_config.aws.region,
               my_config.aws.s3.bucket,
