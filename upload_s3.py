@@ -56,7 +56,7 @@ def s3_upload_json(region, bucket, file, data):
     print('storing: {}'.format(data_json))
     s3 = boto3.resource('s3', region_name=region)
     s3file = s3.Object(bucket, file)
-    s3file.put(Body=data_json.encode('utf8'), ContentType='application/json')
+    s3file.put(Body=data_json.encode('utf8'), ContentType='application/json', ACL='public-read')
 
 
 def main():
