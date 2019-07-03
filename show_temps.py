@@ -45,11 +45,8 @@ def entry_to_disp(entry):
 
 def main():
     arr = read_file(my_config.path.log)
-    amax = len(arr)
-    amin = max(0, amax - 100)
-
-    for i in range(amin, amax):
-        disp = entry_to_disp(arr[i])
+    for entry in arr[-100:]:
+        disp = entry_to_disp(entry)
         print(disp)
 
 
