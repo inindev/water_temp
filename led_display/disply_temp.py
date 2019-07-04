@@ -44,7 +44,7 @@ def main():
     disp = TM1637(gpio_clk=17, gpio_dio=18)
 
     if not can_show():
-        disp.brightness = 0;
+        disp.brightness = 0
         print('blackout time, not showing...')
         return
 
@@ -53,6 +53,7 @@ def main():
     temp = c1000_to_fahrenheit(tokens[1])
     temp_str = '{:.1f}'.format(temp)
 
+    disp.brightness = 4
     disp.set_string(temp_str)
     print(temp_str)
 

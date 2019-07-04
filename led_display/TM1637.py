@@ -126,25 +126,25 @@ class TM1637(object):
         self.delay()
 
     def set_char(self, pos, segs):
-        self.start();
-        self.write_byte(self.CMD_DATA | self.DATA_FIX_ADDR);
-        self.stop();
+        self.start()
+        self.write_byte(self.CMD_DATA | self.DATA_FIX_ADDR)
+        self.stop()
 
-        self.start();
-        self.write_byte(self.CMD_ADDRESS | (pos & 0x07));
-        self.write_byte(segs);
-        self.stop();
+        self.start()
+        self.write_byte(self.CMD_ADDRESS | (pos & 0x07))
+        self.write_byte(segs)
+        self.stop()
 
     def set_chars(self, segs_list, start=0):
-        self.start();
-        self.write_byte(self.CMD_DATA | self.DATA_INC_ADDR);
-        self.stop();
+        self.start()
+        self.write_byte(self.CMD_DATA | self.DATA_INC_ADDR)
+        self.stop()
 
-        self.start();
-        self.write_byte(self.CMD_ADDRESS | (start & 0x07));
+        self.start()
+        self.write_byte(self.CMD_ADDRESS | (start & 0x07))
         for segs in segs_list:
-            self.write_byte(segs);
-        self.stop();
+            self.write_byte(segs)
+        self.stop()
 
     def set_string(self, str):
         segs_list = []
@@ -171,12 +171,12 @@ class TM1637(object):
     @brightness.setter
     def brightness(self, val):
         self._brightness = min(8, max(0, val))
-        self.start();
+        self.start()
         if self._brightness == 0:
-            self.write_byte(self.CMD_DISPLAY | self.DISPLAY_OFF);
+            self.write_byte(self.CMD_DISPLAY | self.DISPLAY_OFF)
         else:
-            self.write_byte(self.CMD_DISPLAY | self.DISPLAY_ON | (self._brightness-1));
-        self.stop();
+            self.write_byte(self.CMD_DISPLAY | self.DISPLAY_ON | (self._brightness-1))
+        self.stop()
 
     def clear(self):
         self.set_chars([0,0,0,0]) # 4 char display

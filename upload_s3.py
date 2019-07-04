@@ -34,12 +34,12 @@ def parse_line(line):
         return None
 
     # extract date as epoch date: 1561811080
-    date = tokens[0];
+    date = tokens[0]
     utc = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc)
     utc_epoch = int(utc.timestamp())
     # extract temps as raw celsius * 1000
     temp_c1000 = int(tokens[1])
-    temp_f = c1000_to_fahrenheit(temp_c1000);
+    temp_f = c1000_to_fahrenheit(temp_c1000)
 
     data = {
         'date':  date,

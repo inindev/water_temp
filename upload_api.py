@@ -82,7 +82,7 @@ def aws_upload_data(url, key, data):
         print('error, response data.temp - sent: {} received: {}'.format(data['temp'], resp_data['temp']))
         return -2
 
-    return 0;
+    return 0
 
 
 def process_top_entry(file):
