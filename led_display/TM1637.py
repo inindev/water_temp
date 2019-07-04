@@ -162,7 +162,7 @@ class TM1637(object):
                 segs |= self.SEG_POINT
             segs_list.insert(0, segs)
 
-        self.set_chars(segs_list, 4-len(segs_list))
+        self.set_chars(segs_list[-4:])
 
     # display 0-8: 0=off, 8=brightest
     @property
