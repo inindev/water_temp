@@ -29,13 +29,13 @@ def c1000_to_fahrenheit(temp_c1000):
 def can_show():
     dtnow = datetime.utcnow().replace(microsecond=0)
 
-    # date_begin: april -> 4/1
-    # date_end: nov     -> 11/1
+    # date_begin: april ->  4/1
+    # date_end:   nov   -> 11/1
     can_show_month = (dtnow.month > 3) and (dtnow.month < 11)
 
     # time begin: 7:00a -> 11:00 UTC
-    # time end: 6:00p   -> 22:00 UTC
-    can_show_hour = (dtnow.hour > 10) and (dtnow.hour < 22)
+    # time end:   7:00p -> 23:00 UTC
+    can_show_hour = (dtnow.hour > 10) and (dtnow.hour < 23)
 
     return can_show_month and can_show_hour
 
