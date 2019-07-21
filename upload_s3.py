@@ -26,11 +26,11 @@ def c1000_to_fahrenheit(temp_c1000):
 
 
 # parses a log data entry and returns json
-#   input:  2019-06-30 20:21:22   29636
-#   output: {'date': '2019-06-30 20:21:22', 'epoch': 1561926082, 'c1000': 29636, 'temp': 85.3}
+#   input:  2019-06-30 20:21:22   w:29636   a:28032
+#   output: {'date': '2019-06-30 20:21:22', 'epoch': 1561926082, 'c1000w': 29636, 'tempw': 85.3, 'c1000a': 28032, 'tempa': 82.5}
 def parse_line(line):
     tokens = line.split('\t')
-    if len(tokens) != 2:
+    if len(tokens) != 3:
         return None
 
     # extract date as epoch date: 1561811080
@@ -38,14 +38,18 @@ def parse_line(line):
     utc = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc)
     utc_epoch = int(utc.timestamp())
     # extract temps as raw celsius * 1000
-    temp_c1000 = int(tokens[1])
-    temp_f = c1000_to_fahrenheit(temp_c1000)
+    temp_c1000w = int(tokens[1][2:])
+    temp_fw = c1000_to_fahrenheit(temp_c1000w)
+    temp_c1000a = int(tokens[2][2:])
+    temp_fa = c1000_to_fahrenheit(temp_c1000a)
 
     data = {
-        'date':  date,
-        'epoch': utc_epoch,
-        'c1000': temp_c1000,
-        'temp':  temp_f
+        'date':   date,
+        'epoch':  utc_epoch,
+        'c1000w': temp_c1000w,
+        'tempw':  temp_fw,
+        'c1000a': temp_c1000a,
+        'tempa':  temp_fa
     }
 
     return data
@@ -83,4 +87,3 @@ if __name__ == '__main__':
         print('python 3 required')
         sys.exit(1)
     main()
-
