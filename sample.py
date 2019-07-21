@@ -37,39 +37,39 @@ def main():
     os.system('modprobe w1-therm')
 
 #    devices = [os.path.basename(dp) for dp in glob.glob('/sys/bus/w1/devices/28*')]
+    temp_c1000w = read_temp_c1000(my_config.therm.w)
     temp_c1000a = read_temp_c1000(my_config.therm.a)
-    temp_c1000b = read_temp_c1000(my_config.therm.b)
     sys.stdout.write('.')
     sys.stdout.flush()
     time.sleep(0.4)
+    temp_c1000w = read_temp_c1000(my_config.therm.w)
     temp_c1000a = read_temp_c1000(my_config.therm.a)
-    temp_c1000b = read_temp_c1000(my_config.therm.b)
 
+    totalw = 0
     totala = 0
-    totalb = 0
     for x in range(8):
         sys.stdout.write('.')
         sys.stdout.flush()
         time.sleep(0.4)
+        temp_c1000w = read_temp_c1000(my_config.therm.w)
         temp_c1000a = read_temp_c1000(my_config.therm.a)
-        temp_c1000b = read_temp_c1000(my_config.therm.b)
+        totalw += temp_c1000w
         totala += temp_c1000a
-        totalb += temp_c1000b
     print()
 
     dtnow = datetime.utcnow().replace(microsecond=0)
+    avg_c1000w = float(totalw) / 8.0
     avg_c1000a = float(totala) / 8.0
-    avg_c1000b = float(totalb) / 8.0
+    c1000w = round(avg_c1000w)
     c1000a = round(avg_c1000a)
-    c1000b = round(avg_c1000b)
+    temp_fw = avg_c1000w * 9.0 / 5000.0 + 32.0
     temp_fa = avg_c1000a * 9.0 / 5000.0 + 32.0
-    temp_fb = avg_c1000b * 9.0 / 5000.0 + 32.0
-    print('{}  water: {} ({:.1f})  air: {} ({:.1f})'.format(dtnow, c1000a, temp_fa, c1000b, temp_fb))
+    print('{}  water: {} ({:.1f})  air: {} ({:.1f})'.format(dtnow, c1000w, temp_fw, c1000a, temp_fa))
     with open(my_config.path.log, 'a') as fp:
-        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000a, c1000b)) # water, air
+        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000w, c1000a)) # water, air
 
     with open(my_config.path.upload, 'a') as fp:
-        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000a, c1000b))
+        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000w, c1000a))
 
 
 
