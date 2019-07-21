@@ -18,17 +18,8 @@ import sys
 import my_config
 
 
-THERM_A = '28-000008afdc2d'
-THERM_B = '28-000008b06dc7'
-
-#CAL = {'28-000008afdc2d':-139, '28-000008b06dc7':18}
-#CAL = {'28-000008afdc2d':-463, '28-000008b06dc7':-463}
-CAL = { '28-000008afdc2d': -100,
-        '28-000008b06dc7': +60 }
-
-
 def read_temp_c1000(device):
-    cal = CAL[device]
+    cal = my_config.therm.cal[device]
     path = '/sys/bus/w1/devices/{}/w1_slave'.format(device)
     with open(path, 'r') as fp:
         for i in range(3):
@@ -46,34 +37,39 @@ def main():
     os.system('modprobe w1-therm')
 
 #    devices = [os.path.basename(dp) for dp in glob.glob('/sys/bus/w1/devices/28*')]
-    temp_c1000a = read_temp_c1000(THERM_A)
-    temp_c1000b = read_temp_c1000(THERM_B)
+    temp_c1000a = read_temp_c1000(my_config.therm.a)
+    temp_c1000b = read_temp_c1000(my_config.therm.b)
     sys.stdout.write('.')
     sys.stdout.flush()
     time.sleep(0.4)
-    temp_c1000a = read_temp_c1000(THERM_A)
-    temp_c1000b = read_temp_c1000(THERM_B)
+    temp_c1000a = read_temp_c1000(my_config.therm.a)
+    temp_c1000b = read_temp_c1000(my_config.therm.b)
 
-    total = 0
+    totala = 0
+    totalb = 0
     for x in range(8):
         sys.stdout.write('.')
         sys.stdout.flush()
         time.sleep(0.4)
-        temp_c1000a = read_temp_c1000(THERM_A)
-        temp_c1000b = read_temp_c1000(THERM_B)
-        total = total + temp_c1000a + temp_c1000b
+        temp_c1000a = read_temp_c1000(my_config.therm.a)
+        temp_c1000b = read_temp_c1000(my_config.therm.b)
+        totala += temp_c1000a
+        totalb += temp_c1000b
     print()
 
     dtnow = datetime.utcnow().replace(microsecond=0)
-    avg_c1000 = float(total) / 16.0
-    c1000 = round(avg_c1000)
-    temp_f = avg_c1000 * 9.0 / 5000.0 + 32.0
-    print('{}  {} ({:.1f})'.format(dtnow, c1000, temp_f))
+    avg_c1000a = float(totala) / 8.0
+    avg_c1000b = float(totalb) / 8.0
+    c1000a = round(avg_c1000a)
+    c1000b = round(avg_c1000b)
+    temp_fa = avg_c1000a * 9.0 / 5000.0 + 32.0
+    temp_fb = avg_c1000b * 9.0 / 5000.0 + 32.0
+    print('{}  water: {} ({:.1f})  air: {} ({:.1f})'.format(dtnow, c1000a, temp_fa, c1000b, temp_fb))
     with open(my_config.path.log, 'a') as fp:
-        fp.write('{}\t{}\n'.format(dtnow, c1000))
+        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000a, c1000b)) # water, air
 
     with open(my_config.path.upload, 'a') as fp:
-        fp.write('{}\t{}\n'.format(dtnow, c1000))
+        fp.write('{}\tw:{}\ta:{}\n'.format(dtnow, c1000a, c1000b))
 
 
 
@@ -82,4 +78,3 @@ if __name__ == '__main__':
         print('python 3 required')
         sys.exit(1)
     main()
-
