@@ -34,8 +34,8 @@ def can_show():
     can_show_month = (dtnow.month > 3) and (dtnow.month < 11)
 
     # time begin: 7:00a -> 11:00 UTC
-    # time end:   7:00p -> 23:00 UTC
-    can_show_hour = (dtnow.hour > 10) and (dtnow.hour < 23)
+    # time end:   8:00p -> 24:00 UTC
+    can_show_hour = (dtnow.hour > 10) and (dtnow.hour < 24)
 
     return can_show_month and can_show_hour
 
@@ -50,7 +50,7 @@ def main():
 
     entry = get_last_entry(my_config.path.log)
     tokens = entry.split('\t')
-    temp = c1000_to_fahrenheit(tokens[1])
+    temp = c1000_to_fahrenheit(tokens[1][2:])
     temp_str = '{:.1f}'.format(temp)
 
     disp.brightness = 4
@@ -64,4 +64,3 @@ if __name__ == '__main__':
         print('python 3 required')
         sys.exit(1)
     main()
-
