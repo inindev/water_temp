@@ -7,6 +7,7 @@
 #
 
 import boto3
+from collections import OrderedDict
 from datetime import datetime, timezone
 import sys
 import json
@@ -43,14 +44,13 @@ def parse_line(line):
     temp_c1000a = int(tokens[2][2:])
     temp_fa = c1000_to_fahrenheit(temp_c1000a)
 
-    data = {
-        'date':   date,
-        'epoch':  utc_epoch,
-        'c1000w': temp_c1000w,
-        'tempw':  temp_fw,
-        'c1000a': temp_c1000a,
-        'tempa':  temp_fa
-    }
+    data = OrderedDict()
+    data['date'] = date
+    data['epoch'] = utc_epoch
+    data['c1000w'] = temp_c1000w
+    data['tempw'] = temp_fw
+    data['c1000a'] = temp_c1000a
+    data['tempa'] = temp_fa
 
     return data
 
