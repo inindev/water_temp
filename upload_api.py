@@ -119,6 +119,7 @@ def remove_if_empty(file):
             print('removing empty file: {}'.format(file))
             os.remove(file)
     except OSError as ex:
+        print('OSError thrown: {}'.format(ex.message))
         pass
 
 
@@ -140,4 +141,3 @@ if __name__ == '__main__':
         print('python 3 required')
         sys.exit(1)
     main()
-
