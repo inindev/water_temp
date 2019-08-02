@@ -1,6 +1,7 @@
 # project specific
 test*.py
 water*.log
+*.old
 *config.py
 !/led_display/my_config.py
 
