@@ -35,11 +35,22 @@ def c1000_to_fahrenheit(temp_c1000):
     return temp_f10 / 10.0
 
 
+# input:  2019-08-02 09:21:22	w:28250	a:22345
+# output: 2019-08-02 05:21:22  ->  water: 82.9°  air: 72.2°
 def entry_to_disp(entry):
     tokens = entry.split('\t')
+    if len(tokens) != 3:
+        return None
+
     date = datestr_to_eastern(tokens[0])
-    temp = c1000_to_fahrenheit(tokens[1])
-    disp = '{} -> {:.1f}'.format(date, temp)
+
+    # tokens are celsius * 1000
+    temp_c1000w = int(tokens[1][2:])
+    temp_fw = c1000_to_fahrenheit(temp_c1000w)
+    temp_c1000a = int(tokens[2][2:])
+    temp_fa = c1000_to_fahrenheit(temp_c1000a)
+
+    disp = '{}  ->  water: {:.1f}°  air: {:.1f}°'.format(date, temp_fw, temp_fa)
     return disp
 
 
@@ -56,4 +67,3 @@ if __name__ == '__main__':
         print('python 3 required')
         sys.exit(1)
     main()
-
